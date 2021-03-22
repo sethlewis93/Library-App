@@ -16,7 +16,6 @@ const sequelize = require("./models/index").sequelize;
 })();
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 const app = express();
 
@@ -31,22 +30,27 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  const error = new Error();
+  error.status = 404;
+  next(error);
 });
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+/* ERROR HANDLERS */
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+/* Global error handler */
+app.use((err, req, res, next) => {
+  if (err.status === 404) {
+    err.message = "This page does not exist";
+    res.status(404).render("page-not-found", { err });
+  } else {
+    err.message = "There has been a problem on the server";
+    err.status = 500;
+    res.render("error", { err });
+    console.log(`Status: ${err.status}, Message: ${err.message}`);
+  }
 });
 
 module.exports = app;
