@@ -1,0 +1,6 @@
+if(errors)
+  h2.errors Looks like an error has occured.
+  ul.errors
+    each error in errors
+      li
+        =error.message
