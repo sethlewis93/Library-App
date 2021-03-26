@@ -51,7 +51,7 @@ router.post(
 /* Get details of a specific book */
 router.get(
   "/:id",
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
 
     if (book) {
@@ -68,7 +68,7 @@ router.get(
 /* Edit book form page */
 router.get(
   "/:id/update",
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
       res.render("books/update-book", { book, title: book.title });
@@ -84,7 +84,7 @@ router.get(
 /* Update book. */
 router.post(
   "/:id/update",
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     let book;
     try {
       book = await Book.findByPk(req.params.id);
@@ -116,7 +116,7 @@ router.post(
 /* Delete individual book. */
 router.post(
   "/:id/delete",
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
       await book.destroy();
