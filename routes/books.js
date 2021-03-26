@@ -57,8 +57,10 @@ router.get(
     if (book) {
       res.render("books/book-detail", { book, title: book.title });
     } else {
-      const err = new Error("Sorry - This page does not exist");
-      res.render("page-not-found", { err });
+      const err = new Error();
+      err.status = 404;
+      err.message = "Sorry - This page does not exist";
+      next(err);
     }
   })
 );
@@ -71,8 +73,10 @@ router.get(
     if (book) {
       res.render("books/update-book", { book, title: book.title });
     } else {
-      const err = new Error("Sorry - This page does not exist");
-      res.render("page-not-found", { err });
+      const err = new Error();
+      err.status = 404;
+      err.message = "Sorry - This page does not exist";
+      next(err);
     }
   })
 );
@@ -88,8 +92,10 @@ router.post(
         await book.update(req.body);
         res.redirect("/");
       } else {
-        const err = new Error("Sorry - This page does not exist");
-        res.render("page-not-found", { err });
+        const err = new Error();
+        err.status = 404;
+        err.message = "Sorry - This page does not exist";
+        next(err);
       }
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
@@ -116,8 +122,10 @@ router.post(
       await book.destroy();
       res.redirect("/");
     } else {
-      const err = new Error("Sorry - This page does not exist");
-      res.render("page-not-found", { err });
+      const err = new Error();
+      err.status = 404;
+      err.message = "Sorry - This page does not exist";
+      next(err);
     }
   })
 );

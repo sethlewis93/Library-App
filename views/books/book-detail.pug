@@ -3,6 +3,8 @@ extends ../layout
 block content
   h2= book.title
   p= book.author
+  p= book.genre 
+  p= book.year
   a(href="../") &larr; Back 
   | | 
   a(href="/books/" + book.id + "/update") Update Book

@@ -29,15 +29,7 @@ module.exports = (sequelize) => {
           },
         },
       },
-      genre: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "Please enter a valid input for 'genre'",
-          },
-        },
-      },
+      genre: Sequelize.STRING,
       year: {
         type: Sequelize.INTEGER,
         allowNull: false,
