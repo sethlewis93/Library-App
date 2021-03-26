@@ -16,33 +16,31 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const books = await Book.findAll({ order: [["title", "ASC"]] });
-    res.render("all-books", { title: "Our Book Shop", books });
+    res.render("books/all-books", { title: "Our Book Shop", books });
   })
 );
 
 /* GET new books page */
-router.get("/books/new", (req, res) => {
-  res.render("new-book", { book: {}, title: "New Book" });
+router.get("/new", (req, res) => {
+  res.render("books/new-book", { book: {}, title: "New Book" });
 });
 
 /* POST new book */
 router.post(
-  "/books",
+  "/",
   asyncHandler(async (req, res) => {
     let book;
     try {
       book = await Book.create(req.body);
-      res.redirect("/books/" + book.id);
+      res.redirect("/");
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
-        console.log(error.name);
         book = await Book.build(req.body);
-        res.render("new-book", {
+        return res.render("books/new-book", {
           book,
           errors: error.errors,
           title: "New Book",
         });
-        console.log(errors);
       } else {
         throw error;
       }
@@ -52,12 +50,12 @@ router.post(
 
 /* Get details of a specific book */
 router.get(
-  "/books/:id",
+  "/:id",
   asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
 
     if (book) {
-      res.render("book-detail", { book, title: book.title });
+      res.render("books/book-detail", { book, title: book.title });
     } else {
       const err = new Error("Sorry - This page does not exist");
       res.render("page-not-found", { err });
@@ -67,11 +65,11 @@ router.get(
 
 /* Edit book form page */
 router.get(
-  "/books/:id/update",
+  "/:id/update",
   asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
-      res.render("update-book", { book, title: book.title });
+      res.render("books/update-book", { book, title: book.title });
     } else {
       const err = new Error("Sorry - This page does not exist");
       res.render("page-not-found", { err });
@@ -81,14 +79,14 @@ router.get(
 
 /* Update book. */
 router.post(
-  "/books/:id/update",
+  "/:id/update",
   asyncHandler(async (req, res) => {
     let book;
     try {
       book = await Book.findByPk(req.params.id);
       if (book) {
         await book.update(req.body);
-        res.redirect("/books/" + book.id);
+        res.redirect("/");
       } else {
         const err = new Error("Sorry - This page does not exist");
         res.render("page-not-found", { err });
@@ -97,10 +95,10 @@ router.post(
       if (error.name === "SequelizeValidationError") {
         book = await Book.build(req.body);
         book.id = req.params.id;
-        res.render("books/update", {
+        res.render("books/update-book", {
           book,
           errors: error.errors,
-          title: "Update Book",
+          title: book.title,
         });
       } else {
         throw error;
@@ -109,14 +107,14 @@ router.post(
   })
 );
 
-/* Delete individual article. */
+/* Delete individual book. */
 router.post(
-  "/books/:id/delete",
+  "/:id/delete",
   asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
       await book.destroy();
-      res.redirect("/books");
+      res.redirect("/");
     } else {
       const err = new Error("Sorry - This page does not exist");
       res.render("page-not-found", { err });

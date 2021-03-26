@@ -4,14 +4,7 @@ const Sequelize = require("sequelize");
 
 module.exports = (sequelize) => {
   class Book extends Sequelize.Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+    static associate(models) {}
   }
   Book.init(
     {
@@ -19,8 +12,11 @@ module.exports = (sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
+          notNull: {
+            msg: "Please enter a valid input for title",
+          },
           notEmpty: {
-            msg: "Please enver a valid input for title",
+            msg: "Please enver a valid input for 'title'",
           },
         },
       },
@@ -29,12 +25,23 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enver a valid input for author",
+            msg: "Please enver a valid input for 'author'",
           },
         },
       },
-      genre: Sequelize.STRING,
-      year: Sequelize.INTEGER,
+      genre: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Please enter a valid input for 'genre'",
+          },
+        },
+      },
+      year: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,
