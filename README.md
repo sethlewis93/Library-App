@@ -1,7 +1,15 @@
-# MY SQL LIBRARY
+# LIBRARY/BOOK SHOP CRUD APP
 
-The SQL Library Manager is my eighth completed project for the Team Treehouse JavaScript Techdegree. It is an example of a CRUD web application that manages a collection of library books. It utilizes JavaScript, Node.js, Express, Pug, SQLite and the ORM Sequelize.
+## About
 
-This application was created for the purpose of implementing and utilizing a database for data persistence, as well as leveraging helpful database tools to view and interact with a SQLite database.
+A simple CRUD application that manages a collection of library books. 
 
-To use, download the project dependencies using the command "npm install" on your terminal, then load the application with "npm start".
+Built with Node and Express.js, SQLite and the Sequelize ORM are used for transaction and relational support. 
+
+Users of the app can create, update, delete, and view titles in the library/shop. Express.js routes are used in conjunction with the Pug template engine for navigation and HTML prcessing.
+
+## Instructions
+1. Download project files.
+2. Run `npm install` to retrieve dependencies. 
+3. Run `npm start` to fire up the DB server.
+4. View the library, add your own books, update information about selected works, delete selected works from the library.
