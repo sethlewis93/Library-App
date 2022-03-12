@@ -12,4 +12,5 @@ Users of the app can create, update, delete, and view titles in the library/shop
 1. Download project files.
 2. Run `npm install` to retrieve dependencies. 
 3. Run `npm start` to fire up the DB server.
+4. Open your preferred browser to `localhost:3000`.
 4. View the library, add your own books, update information about selected works, delete selected works from the library.
